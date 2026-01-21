@@ -1,0 +1,47 @@
+
+GeneralizedHyperGeometryProbability::illegal =
+  "The number of selected exeeds the total number.";
+GeneralizedHyperGeometryProbability[nselected_, ndistinct_,
+  Ndistinct_, Ncopies_] :=
+ Module[{TotalCardsNumber, TotalChoices, i, j, result = {}, n, nleft},
+  TotalCardsNumber = Ndistinct*Ncopies;
+  If[TotalCardsNumber < nselected,
+   Message[GeneralizedHyperGeometryProbability::illegal];
+   Return[False]];
+  If[Ndistinct < ndistinct, Return[0]];
+  If[nselected < ndistinct, Return[0]];
+  If[ndistinct*Ncopies < nselected, Return[0]];
+  If[ndistinct == 1,
+   Return[
+    Ndistinct*
+    Binomial[Ncopies, nselected]/Binomial[TotalCardsNumber, nselected]]
+   ];
+  TotalChoices = Binomial[TotalCardsNumber, nselected];
+  If[nselected == ndistinct,
+   Return[
+    Binomial[Ndistinct, ndistinct]*Ncopies^ndistinct/TotalChoices]
+   ];
+  For[i = 1, i <= ndistinct, i++,
+   AppendTo[result,
+    GeneralizedHyperGeometryProbability[i, i, Ndistinct, Ncopies]]
+   ];
+  For[i = 2, i <= nselected - ndistinct + 1, i++,
+   result[[1]] =
+    GeneralizedHyperGeometryProbability[i, 1, Ndistinct, Ncopies];
+   For[j = 2, j <= ndistinct, j++,
+    n = j - 1 + i;
+    nleft = TotalCardsNumber - n + 1;
+    result[[j]] =
+     result[[j]]*(j*Ncopies - n + 1)/nleft +
+      result[[j - 1]]*(Ndistinct - j + 1)*Ncopies/nleft
+    ]
+   ];
+  Return[result[[ndistinct]]]
+  ]
+  
+In[5]:= N[GeneralizedHyperGeometryProbability[54*1, 54, 54, 4]]
+Out[5]= 9.19323*10^-20
+In[6]:= N[GeneralizedHyperGeometryProbability[54*2, 54, 54, 4]]
+Out[6]= 0.0190881
+In[7]:= N[GeneralizedHyperGeometryProbability[54*3, 54, 54, 4]]
+Out[7]= 0.820296

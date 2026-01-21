@@ -1,0 +1,334 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     11689,        325]
+NotebookOptionsPosition[     10623,        283]
+NotebookOutlinePosition[     10967,        298]
+CellTagsIndexPosition[     10924,        295]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"GeneralizedHyperGeometryProbability", "::", "illegal"}], "=", 
+   "\"\<The number of selected exeeds the total number.\>\""}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"GeneralizedHyperGeometryProbability", "[", 
+   RowBox[{
+   "nselected_", ",", "ndistinct_", ",", "Ndistinct_", ",", "Ncopies_"}], 
+   "]"}], ":=", "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"nselected", ":", " ", 
+     RowBox[{
+     "the", " ", "number", " ", "of", " ", "card", " ", "selected"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"ndistinct", ":", " ", 
+     RowBox[{
+     "the", " ", "number", " ", "of", " ", "distinct", " ", "card", " ", "in",
+       " ", "the", " ", "selected", " ", "card"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Ndistinct", ":", " ", 
+     RowBox[{
+     "the", " ", "total", " ", "number", " ", "of", " ", "distinct", " ", 
+      "card"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"Ncopies", ":", " ", 
+     RowBox[{"the", " ", "copies", " ", "of", " ", 
+      RowBox[{"poker", "."}]}]}]}], "*)"}], 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"TotalCardsNumber", ",", "TotalChoices", ",", "i", ",", "j", ",", 
+      RowBox[{"result", "=", 
+       RowBox[{"{", "}"}]}], ",", "n", ",", "nleft"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"TotalCardsNumber", "=", 
+      RowBox[{"Ndistinct", "*", "Ncopies"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"TotalCardsNumber", "<", "nselected"}], ",", 
+       RowBox[{
+        RowBox[{"Message", "[", 
+         RowBox[{"GeneralizedHyperGeometryProbability", "::", "illegal"}], 
+         "]"}], ";", 
+        RowBox[{"Return", "[", "False", "]"}]}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"Ndistinct", "<", "ndistinct"}], ",", 
+       RowBox[{"Return", "[", "0", "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"nselected", "<", "ndistinct"}], ",", 
+       RowBox[{"Return", "[", "0", "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"ndistinct", "*", "Ncopies"}], "<", "nselected"}], ",", 
+       RowBox[{"Return", "[", "0", "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"ndistinct", "\[Equal]", "1"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"Return", "[", 
+        RowBox[{"Ndistinct", "*", 
+         RowBox[{
+          RowBox[{"Binomial", "[", 
+           RowBox[{"Ncopies", ",", "nselected"}], "]"}], "/", 
+          RowBox[{"Binomial", "[", 
+           RowBox[{"TotalCardsNumber", ",", "nselected"}], "]"}]}]}], "]"}]}],
+       "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"TotalChoices", "=", 
+      RowBox[{"Binomial", "[", 
+       RowBox[{"TotalCardsNumber", ",", "nselected"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"nselected", "\[Equal]", "ndistinct"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Return", "[", 
+        RowBox[{
+         RowBox[{"Binomial", "[", 
+          RowBox[{"Ndistinct", ",", "ndistinct"}], "]"}], "*", 
+         RowBox[{
+          RowBox[{"Ncopies", "^", "ndistinct"}], "/", "TotalChoices"}]}], 
+        "]"}]}], "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"For", "[", 
+      RowBox[{
+       RowBox[{"i", "=", "1"}], ",", 
+       RowBox[{"i", "\[LessEqual]", "ndistinct"}], ",", 
+       RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"AppendTo", "[", 
+        RowBox[{"result", ",", 
+         RowBox[{"GeneralizedHyperGeometryProbability", "[", 
+          RowBox[{"i", ",", "i", ",", "Ndistinct", ",", "Ncopies"}], "]"}]}], 
+        "]"}]}], "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"For", "[", 
+      RowBox[{
+       RowBox[{"i", "=", "2"}], ",", 
+       RowBox[{"i", "\[LessEqual]", 
+        RowBox[{"nselected", "-", "ndistinct", "+", "1"}]}], ",", 
+       RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"result", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], "=", 
+         RowBox[{"GeneralizedHyperGeometryProbability", "[", 
+          RowBox[{"i", ",", "1", ",", "Ndistinct", ",", "Ncopies"}], "]"}]}], 
+        ";", "\[IndentingNewLine]", 
+        RowBox[{"For", "[", 
+         RowBox[{
+          RowBox[{"j", "=", "2"}], ",", 
+          RowBox[{"j", "\[LessEqual]", "ndistinct"}], ",", 
+          RowBox[{"j", "++"}], ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"n", "=", 
+            RowBox[{"j", "-", "1", "+", "i"}]}], ";", "\[IndentingNewLine]", 
+           RowBox[{"nleft", "=", 
+            RowBox[{"TotalCardsNumber", "-", "n", "+", "1"}]}], ";", 
+           "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"result", "[", 
+             RowBox[{"[", "j", "]"}], "]"}], "=", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"result", "[", 
+               RowBox[{"[", "j", "]"}], "]"}], "*", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"j", "*", "Ncopies"}], "-", "n", "+", "1"}], ")"}], 
+               "/", "nleft"}]}], "+", 
+             RowBox[{
+              RowBox[{"result", "[", 
+               RowBox[{"[", 
+                RowBox[{"j", "-", "1"}], "]"}], "]"}], "*", 
+              RowBox[{"(", 
+               RowBox[{"Ndistinct", "-", "j", "+", "1"}], ")"}], "*", 
+              RowBox[{"Ncopies", "/", "nleft"}]}]}]}]}]}], 
+         "\[IndentingNewLine]", "]"}]}]}], "\[IndentingNewLine]", "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Return", "[", 
+      RowBox[{"result", "[", 
+       RowBox[{"[", "ndistinct", "]"}], "]"}], "]"}]}]}], 
+   "\[IndentingNewLine]", "]"}]}]}], "Input",
+ CellChangeTimes->{{3.5025523938053627`*^9, 3.5025524483494825`*^9}, {
+   3.5025526328350344`*^9, 3.5025526802197447`*^9}, 3.50255271073549*^9, {
+   3.5025570160817413`*^9, 3.502557016774781*^9}, {3.502562253996333*^9, 
+   3.502562308578455*^9}, {3.50256241933379*^9, 3.502562433391594*^9}, {
+   3.502562478917198*^9, 3.502562549484234*^9}, {3.502563702065158*^9, 
+   3.502563705333345*^9}, {3.50256373969431*^9, 3.5025637550511885`*^9}, {
+   3.5025638254342146`*^9, 3.50256407100126*^9}, {3.5025641484916925`*^9, 
+   3.5025642072900553`*^9}, {3.5025643149902153`*^9, 
+   3.5025644872350674`*^9}, {3.5025645351258063`*^9, 3.502564906954074*^9}, {
+   3.502564952842698*^9, 3.502564956668917*^9}, {3.502565054198496*^9, 
+   3.5025650647911015`*^9}, {3.502565278908348*^9, 3.502565433982218*^9}, {
+   3.502565487093256*^9, 3.5025655213492155`*^9}, {3.5181165104286523`*^9, 
+   3.5181165831408114`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"N", "[", 
+  RowBox[{"GeneralizedHyperGeometryProbability", "[", 
+   RowBox[{
+    RowBox[{"54", "*", "1"}], ",", "54", ",", "54", ",", "4"}], "]"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.5025842033012924`*^9, 3.502584203378297*^9}}],
+
+Cell[BoxData["9.193230846065266`*^-20"], "Output",
+ CellChangeTimes->{3.5025842371212263`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"GeneralizedHyperGeometryProbability", "[", 
+  RowBox[{
+   RowBox[{"54", "*", "1"}], ",", "54", ",", "54", ",", "4"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ FractionBox["40564819207303340847894502572032", 
+  "441246607275887333002914615708971150943513742819895"]], "Output",
+ CellChangeTimes->{{3.5182644832164316`*^9, 3.5182644885867386`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"N", "[", 
+  RowBox[{"GeneralizedHyperGeometryProbability", "[", 
+   RowBox[{
+    RowBox[{"54", "*", "3"}], ",", "54", ",", "54", ",", "4"}], "]"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.5025649307284336`*^9, 3.5025649387158904`*^9}, {
+  3.502565462152829*^9, 3.5025654691532297`*^9}, {3.502583961781478*^9, 
+  3.502583965069666*^9}, {3.5025842834728775`*^9, 3.502584283547882*^9}}],
+
+Cell[BoxData["0.8202960908983106`"], "Output",
+ CellChangeTimes->{{3.502565437966446*^9, 3.5025654699312744`*^9}, {
+   3.5025655054973087`*^9, 3.5025655252204366`*^9}, 3.5025840102872524`*^9, {
+   3.5025842617166333`*^9, 3.502584284473935*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"GeneralizedHyperGeometryProbability", "[", 
+  RowBox[{
+   RowBox[{"54", "*", "3"}], ",", "54", ",", "54", ",", "4"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ FractionBox["2220569736629156151741670901129196206150503104512", 
+  "2707034400465566460140580464472215649960207011165"]], "Output",
+ CellChangeTimes->{3.5182645087598925`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"N", "[", "%", "]"}]], "Input",
+ CellChangeTimes->{{3.502565527245552*^9, 3.502565530690749*^9}}],
+
+Cell[BoxData["0.8202960908983106`"], "Output",
+ CellChangeTimes->{3.502565531798813*^9, 3.518264512608113*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"N", "[", 
+  RowBox[{"GeneralizedHyperGeometryProbability", "[", 
+   RowBox[{
+    RowBox[{"100", "*", "6"}], ",", "100", ",", "100", ",", "80"}], "]"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.502565572431137*^9, 3.5025655885130568`*^9}, {
+  3.5025656712317877`*^9, 3.5025657664902363`*^9}}],
+
+Cell[BoxData["0.8263695216999953`"], "Output",
+ CellChangeTimes->{
+  3.5025656410880637`*^9, {3.502565689696844*^9, 3.502565771342514*^9}, 
+   3.5025841322772303`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"N", "[", "%", "]"}]], "Input",
+ CellChangeTimes->{{3.5025656582380447`*^9, 3.5025656610152035`*^9}}],
+
+Cell[BoxData["0.9999999999999962`"], "Output",
+ CellChangeTimes->{3.502565661918255*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"N", "[", 
+  RowBox[{"GeneralizedHyperGeometryProbability", "[", 
+   RowBox[{
+    RowBox[{"2000", "*", "6"}], ",", "2000", ",", "2000", ",", "80"}], "]"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.5025657954768944`*^9, 3.5025658029343204`*^9}}]
+},
+WindowSize->{1350, 633},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"8.0 for Microsoft Windows (64-bit) (November 13, 2010)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[545, 20, 6883, 158, 1005, "Input"],
+Cell[CellGroupData[{
+Cell[7453, 182, 259, 6, 47, "Input"],
+Cell[7715, 190, 94, 1, 48, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7846, 196, 158, 3, 47, "Input"],
+Cell[8007, 201, 202, 3, 67, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8246, 209, 409, 8, 47, "Input"],
+Cell[8658, 219, 244, 3, 46, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8939, 227, 158, 3, 47, "Input"],
+Cell[9100, 232, 191, 3, 67, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9328, 240, 120, 2, 47, "Input"],
+Cell[9451, 244, 110, 1, 46, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9598, 250, 316, 7, 47, "Input"],
+Cell[9917, 259, 167, 3, 46, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10121, 267, 124, 2, 47, "Input"],
+Cell[10248, 271, 88, 1, 46, "Output"]
+}, Open  ]],
+Cell[10351, 275, 268, 6, 47, "Input"]
+}
+]
+*)
+
+(* End of internal cache information *)
